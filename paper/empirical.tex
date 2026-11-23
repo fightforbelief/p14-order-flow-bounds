@@ -1,0 +1,53 @@
+\section{Which activity rankings survive?}
+The twelve archives contain 27,640,107 elementary fills in 8,026,298 aggregate records. All 288 hours have observations, and the ID checks find no gaps. The three point reconstructions agree on the direction in every symbol-day. High activity yields more successive same-side events when one counts fills, counts aggregate records, or maximally joins records in both states. Yet the sharp native-time contrasts in Table~\ref{tab:primary} straddle zero in seven comparisons. ETH supplies four of these. All four ETH record contrasts are positive and below 2.6 percentage points, while even the narrowest ETH interval exceeds 18 points in width.
+
+\begin{table}[htbp]\centering
+\caption{Difference in same-side frequency, busiest minus quietest hours. All entries after month are in percentage points.}\label{tab:primary}
+\small\begin{tabular}{llrrrrrr}\toprule
+Asset & Month & Fills & Records & Max joins & Lower & Upper & Excess\\\midrule
+\tableinput primary.tex
+\bottomrule\end{tabular}
+
+\smallskip\begin{minipage}{0.94\linewidth}\footnotesize
+Max joins applies the native-time greedy partition in both groups. Lower and upper optimize the partitions separately. Excess is the minimum positive difference in the fractions of available joins (initial winner minus loser) required to erase the record ranking. A dash denotes an unreachable tie or reversal. Endpoints use unrounded counts.\end{minipage}
+\end{table}
+
+The two April and October SOL comparisons illustrate the difference between a formal reversal and a plausible one. In April the high-activity group needs at least 5,197 of its 5,290 available joins if the quieter group uses none. In October it needs at least 25,272 of 25,312. Even allowing both states to join, minimum excesses are 98.17 and 99.80 percentage points. A reconstruction joining comparable fractions in both states therefore preserves both rankings. By contrast, for July ETH a difference of 12.56 points suffices. The repository supplies the integer witness counts giving these minima.
+
+\paragraph{How many exceptions could eliminate a robust ranking?}
+For the native rule, joinability is a property of each adjacent edge. Keep side changes and segment breaks mandatory, but allow up to $b$ joins that fail the native time or price test. If one state has $U=M-G$ eligible joins, its capacity then rises to $U+\min(b,G-J-S)$: the $G-J-S$ remaining within-segment edges connect equal signs and can be joined independently in this relaxation. To erase a positive ranking at minimum cost, put all exceptions in the winning state, again leaving the loser at singletons. The exact additional budget needed is $[k^*-U_A]_+$. For April LTC, 227 exceptional joins suffice beyond its 2,076 eligible ones. For January and July SOL, the corresponding budgets are 27,158 and 29,600. This measures tolerance to misspecification in boundary counts without extrapolating an error rate from another exchange.
+
+\paragraph{Sensitivity to time and direction.}
+Coarsening the timestamps to millisecond buckets while retaining strict price progression increases median contrast width from 4.19 to 4.66 percentage points (Table~\ref{tab:timing}). The 20 ms convention additionally admits some flat-price edges and lets a sweep cross bucket boundaries. It widens every interval enough to permit either ordering. Its contrast with the primary result reflects both timing and price assumptions.
+
+\begin{table}[htbp]\centering
+\caption{Width of the sharp state contrast across 12 symbol-days (percentage points) and number admitting both signs.}\label{tab:timing}
+\begin{tabular}{lrrrr}\toprule
+Restriction & Min & Median & Max & Both signs\\\midrule
+\tableinput timing.tex
+\bottomrule\end{tabular}
+\end{table}
+
+As a secondary check, weight buy-conditioned and sell-conditioned continuation equally. For predecessor sign $s$, let $F_s$ count switches away from $s$ and $E_s$ count segments ending in $s$. Writing $n_s$ for the feasible order count of that sign gives the balanced statistic
+\[
+  1-\tfrac12\sum_{s\in\{+,-\}} F_s/(n_s-E_s).
+\]
+The numerator and terminal signs are invariant to joining. Both denominators are positive in the sampled groups. By side-specific attainability, the lower and upper endpoints follow by taking the two side minima and the two maxima. Five of twelve native-time comparisons still have positive lower endpoints, but the membership changes. The April SOL lower endpoint rises from $-0.026$ to $+0.031$ percentage points. The April LTC lower endpoint falls from $+0.241$ to $-2.074$ points. Thus the predecessor-side mix affects which activity rankings are identified even when the total number of surviving comparisons stays fixed.
+
+\section{Checking the reconstruction with visible taker labels}
+Coinbase Exchange match messages identify the taker order [7]. We replay archived match messages [8] for BTC-USD, ETH-USD and SOL-USD over the first ten minutes of UTC trading on the first day of January, April, July and October 2025. This fixed archive sample replaced an unavailable live WebSocket connection. After inspecting these 12 product-windows we repeated the audit on the first day of the following month in each quarter, at 12:00 UTC. The two panels contain 56,657 fills overall.
+
+To reproduce the observation structure, we first combine adjacent fills with identical taker ID, execution price, side and timestamp. Labels are needed for this within-level aggregation, just as the Binance feed producer uses order information. We then hide the labels and reconstruct across the resulting records. Thus this exercise tests the unknown \emph{between-record} boundaries. Ground truth for this contiguous-partition model is a consecutive episode of the same taker ID. The 24 streams have no trade-ID gaps. In three windows an ID reappears in a later episode, illustrating the distinction between contiguous execution episodes and distinct order IDs. The totals contain 33,060 episodes and 33,057 within-window distinct IDs.
+
+\begin{table}[htbp]\centering\small
+\caption{Labelled episodes and greedy reconstructed counts on Coinbase. Each row pools four ten-minute windows.}\label{tab:validation}
+\begin{tabular}{llrrrrrr}\toprule
+UTC & Product & Fills & Atoms & Label & Native & 1 ms & 20 ms\\\midrule
+\tableinput validation.tex
+\bottomrule\end{tabular}
+\end{table}
+
+The labelled partition obeys the native rule and achieves its lower endpoint in each of the twelve midnight windows and eleven of the twelve noon windows. For this edge-local rule maximal joining has a unique minimum partition, so agreement in count plus feasibility implies agreement in boundaries. The single exception occurs in ETH-USD in August. Two consecutive sell-side records at USD 3,656.84 and 3,656.60 have the same taker identifier but are 1,077,664 microseconds apart. The direction and price progression are admissible. The elapsed time exceeds even the 20 ms allowance.
+For this window even the direction of the endpoint error matters: the native rule requires at least 2,213 orders but the labelled tape has 2,212 episodes. Under the coarser rules the count falls inside the feasible range although the labelled partition still violates one edge constraint. Counting coverage alone would miss this failure.
+
+The labelled venue provides two lessons for the anonymous venue. First, the regime that joins nearly all eligible native-time boundaries in \emph{both} states deserves attention as an empirical benchmark. The narrow SOL tipping margins quantify how far one would have to depart from that behavior to erase a ranking. Second, admissibility of the true partition is an empirical assumption. Treating Coinbase labels as Binance labels would require evidence about the two engines and feed construction that these data cannot supply.

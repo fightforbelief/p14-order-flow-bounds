@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage[T1]{fontenc}
+\makeatletter
+\let\tableinput\@@input
+\makeatother
+\newcommand{\Prs}{\widehat P}
+\title{Can a busier market be said to have more persistent order flow?\\[3pt]\large Sharp bounds from anonymous execution records}
+\author{Yunjie Guo \and Hanqing Yang\thanks{Corresponding author. Email: hanqing.yang189@gmail.com. Both authors are independent researchers in Suzhou, China.}}
+\date{}
+\begin{document}
+\maketitle
+\begin{abstract}
+A marketable order can consume several resting orders at several prices. This leaves the denominator of order-level trading statistics uncertain even when the aggressor side of every execution is known. We derive the exact finite set of one-step same-side frequencies consistent with an anonymous execution tape under side, price-priority and timing restrictions. A linear scan gives attainable endpoints even when a sweep can span timestamps up to a specified duration. For comparisons across activity states we also calculate the fewest record joins needed to erase a reported ranking. For 8.03 million Binance Spot records across 12 asset-days, both fill and aggregate-record counts rank the busiest hours higher on every day. Five rankings survive every native-timestamp monotone reconstruction. Two of the seven reversible rankings require the busier state's fraction of possible joins to exceed the quieter state's by over 98 percentage points. A separate Coinbase audit with public taker identifiers recovers the labelled episode count by maximal native-time joining in 23 of 24 windows. The exception identifies a limit of transferring sweep assumptions across venues.
+\end{abstract}
+
+\section{The measurement problem}
+Suppose a market monitor reports that buy orders follow buy orders and sell orders follow sell orders more frequently in its busiest hours. Counts of elementary fills give greater weight to orders that encounter many resting counterparties. A feed aggregating fills at the same execution price removes part of this weighting. An incoming order walking across several prices can still generate several aggregate records. If order size or displayed depth changes with activity, the effect on a comparison can differ across the two states.
+
+This paper studies the fraction of adjacent aggressor orders with the same sign, pooling buy and sell pairs. The target concerns immediately executed portions of incoming orders. A trader can send many such orders while executing a larger investment decision. We make no inference about investor identity, metaorder length, or the decay of long-lag correlations. In particular the baseline under independent signs with buy probability $q$ is $q^2+(1-q)^2$. Differences in buy share can change the statistic even in the absence of serial dependence.
+
+Prior work establishes both the importance of choosing the event clock and the hazards of assigning fills to orders. T\'oth et al.\ [1] separate splitting from herding using member identifiers. Schwenk-Nebbe and Thimsen [2] examine how exchange timestamps can link executions in US equity data. Dyhrberg, Foley and Svec [3, online Appendix A2] use direction, monotone execution prices and a time window to join prints. Foley et al.\ [4] study exchange-specific timestamp precision and slow matching. We take these reconstruction restrictions as inputs. Our contribution is to propagate every permitted segmentation into a sharp state contrast, with a certificate counting the joins necessary for a different ranking. This answers a question that benchmarking one reconstruction against another leaves open.
+
+\section{The feasible set}
+Within each uninterrupted observation segment the ordered records are $(s_i,p_i,t_i)$ with $s_i\in\{-1,1\}$, exact decimal price $p_i$, and nondecreasing exchange time $t_i$. An atom is one execution record known to belong to a single taker. The latent order tape partitions the atoms into contiguous blocks. All records in a block must have the same sign. A buy sweep moves up the book and a sell sweep moves down. In the primary model every adjacent pair in a block must satisfy $s_i(p_{i+1}-p_i)>0$ and have equal native timestamps. The strict inequality reflects aggregation by price for one taker and stamp. We assume a sweep completes at one stamp in this specification. The data dictionary by itself does not guarantee that timing assumption.
+
+We also consider a strict-price rule at a coarser timestamp, and a maximum elapsed time from the first to the last atom in an order. Under the latter we permit an unchanged price at distinct native stamps. These restrictions are local to each block and hereditary: any contiguous sub-block of a feasible block is feasible. We allow any partition satisfying them. Sharpness refers to this information model. Additional book or order messages could exclude some feasible partitions.
+
+\paragraph{Proposition 1.}
+Fix $J$ nonempty segments, $M$ records and $S$ observed sign switches within segments. In each segment repeatedly take the longest feasible prefix as one order. Let $G$ denote the resulting total number of orders. Every order count $n\in\{G,\ldots,M\}$ is attainable. For $n>J$ the exact feasible set of same-side frequencies consists of
+\begin{equation}
+       \Prs(n)=1-\frac{S}{n-J}. \label{eq:p}
+\end{equation}
+In particular, when $G>J$ the lower and upper endpoints use $G$ and $M$ respectively.
+
+\paragraph{Proof.}
+After $k$ blocks the greedy prefix reaches at least as far as any other feasible $k$-block prefix. For the induction, if the previous greedy endpoint lies inside the competitor's next block, the remaining suffix of that block is feasible. If it already reaches beyond that block the assertion holds immediately. Thus the greedy partition minimizes count in each segment. Splitting any nonsingleton block retains feasibility and increases count by one, up to the singleton partition. A sign change always forces a cut. Every within-block join deletes exactly one same-side transition, leaving $S$ unchanged. There are $n-J$ adjacent order pairs. This proves (\ref{eq:p}). \hfill$\square$
+
+The buy and sell counts also independently attain every integer between their side-specific greedy and singleton counts. This follows by applying the argument within each maximal same-side run. Thus one can bound the order-count buy share or condition on a known buy count without enumerating partitions. In the duration model a chain of individually close arrivals can exceed the permissible total span. Measuring from the current block's first stamp is essential. For fixed rules a single scan uses constant working memory per segment.
+
+\paragraph{A five-record example.}
+Take four buys at prices 100, 101, 102 and 103 at one stamp, followed by a sell. The buy side admits between one and four orders. One sign switch gives feasible frequencies $0,1/2,2/3,3/4$. Even an exact timestamp combined with a strict book walk leaves the individual order boundaries unresolved.
+
+\paragraph{State comparisons and a tipping count.}
+Let $H$ and $L$ denote disjoint groups of complete segments. Their endpoint counts are independently attainable. The difference $\Prs_H-\Prs_L$ therefore has sharp endpoints $\Prs_H(G_H)-\Prs_L(M_L)$ and $\Prs_H(M_H)-\Prs_L(G_L)$. The interval displays the extrema of a finite set. For a strictly larger record-level statistic in group $A$ than $B$, write $D_j=M_j-J_j$ and suppose both switch counts are positive. The minimum number of joins in $A$ that can erase the ranking, holding $B$ at singletons, is
+\begin{equation}
+ k^*=\left\lceil D_A-\frac{S_A D_B}{S_B}\right\rceil.\label{eq:k}
+\end{equation}
+This follows by solving $S_A/(D_A-k)\geq S_B/D_B$. Joining records in $B$ makes the inequality harder. If $k^*>M_A-G_A$ the ranking survives every permitted segmentation. Otherwise $k^*$ is attainable (with nonzero denominators). The ratio to available joins gives a sensitivity measure without assigning probabilities to partitions.
+
+A second sensitivity calculation allows joins in both states. Write $U_j=M_j-G_j$ for merge capacity and $k_j$ for actual joins. For $U_A,U_B>0$ measure the extra concentration of joins in the initially winning group by $[k_A/U_A-k_B/U_B]_+$, where $[x]_+=\max(x,0)$. Given $k_B$, the smallest count that erases the ranking is
+\[
+ k_A(k_B)=\max\!\left(0,\left\lceil D_A- S_A(D_B-k_B)/S_B\right\rceil\right).
+\]
+Scan integers $0\leq k_B\leq U_B$, discarding $k_A(k_B)>U_A$. Minimizing the positive excess over the remaining pairs gives the exact smallest excess needed. Larger $k_A$ at fixed $k_B$ cannot improve the objective. Proposition 1 supplies a partition for each witness pair. A zero excess means that the winner need not join a larger proportion than the loser. It does not require exactly equal integer fractions. This secondary diagnostic was developed after the initial labelled audit.
+
+\section{Markets, observations and activity states}
+We use Binance Spot's daily aggregate-trade archives [5,6] for ETH/USDT, SOL/USDT and LTC/USDT. For each pair we take the fifteenth day of January, April, July and October 2025. The design fixes one full UTC day per quarter during the first year for which the archive documents microsecond spot timestamps. Each row gives a price, buyer-maker flag and first and last elementary trade IDs. A buyer acting as maker implies an aggressive sell. The inclusive ID span supplies the number of elementary fills. Within each file we check the publisher's SHA-256, record ordering, ID ordering and timestamp ordering. We break segments at each UTC hour and at any gap between successive ID ranges or aggregate IDs. All event-clock comparisons use these same breaks.
+
+Within each symbol-day, rank the 24 hours by elementary fill count. Use the six highest and six lowest hours as the high- and low-activity groups, breaking ties by hour. This assignment is observed before reconstructing any orders. Each group pools transition counts across its hours. Hours with more transitions consequently receive more weight. The labels describe contemporaneous trading intensity and carry no ex ante or causal interpretation. The other twelve hours contribute to coverage figures only. We compare exact extrema with two plug-ins, one event per elementary fill and one per aggregate record. The former can lie beyond the order-level bounds because the feed already links fills within an aggregate. The bounds are deterministic conditional on the sampled tapes. Trade-level standard errors would address a different source of uncertainty.
+
+\input{empirical}
+
+\section{Scope and implications}
+Identification of a state ranking requires knowing enough about within-order fragmentation on each side of the comparison. Adding more observations at the same information level need not determine that fragmentation. Each ambiguous boundary contributes another feasible choice. A study with parent identifiers can instead calculate where the observed partition sits in the feasible set and test which restrictions it violates.
+
+The analysis uses a small deterministic calendar sample, a common quote currency and one primary venue. It does not estimate a population frequency of unidentified rankings. The two activity groups can also have different buy shares, order sizes, liquidity and news exposure. The extrema permit different joining behavior in the two states. A model imposing a common probabilistic rule would narrow the admissible set at the cost of additional assumptions. Extending the statistic to several order lags requires tracking the positions of switches, since their total alone ceases to determine agreement. For the one-step question a report of the two sharp endpoints and the tipping count makes explicit exactly which ordering the anonymous tape can support.
+
+\paragraph{Replication and disclosures.}
+The project repository contains the protocol, data retrieval and integrity checks, exhaustive small-tape tests, sufficient statistics and table-building code:
+\url{https://github.com/fightforbelief/p14-order-flow-bounds}. The authors report no specific funding and no conflicts of interest.
+
+\begin{thebibliography}{9}
+\bibitem{toth} B. T\'oth, I. Palit, F. Lillo and J. D. Farmer. Why is equity order flow so persistent? \emph{Journal of Economic Dynamics and Control} 51 (2015), 218--239.
+\bibitem{taq} S. Schwenk-Nebbe and C. Thimsen. The participant timestamp: Get the most out of TAQ data. Working paper, \href{https://ssrn.com/abstract=3744743}{SSRN 3744743}.
+\bibitem{tick} A. H. Dyhrberg, S. Foley and J. Svec. When bigger is better: The impact of a tiny tick size on undercutting behavior. \emph{Journal of Financial and Quantitative Analysis} 58 (2023), 2387--2416.
+\bibitem{slow} S. Foley, W. Krekel, V. Mollica and J. Svec. Not so fast: Identifying and remediating slow and imprecise cryptocurrency exchange data. \emph{Finance Research Letters} 51 (2023), 103401.
+\bibitem{data} Binance. \href{https://github.com/binance/binance-public-data}{Public market data archive and schema}.
+\bibitem{api} Binance. \href{https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints}{Spot market data endpoints, compressed/aggregate trades list}.
+\bibitem{cb} Coinbase. \href{https://docs.cdp.coinbase.com/exchange/websocket-feed/channels}{Exchange WebSocket channels, match message}.
+\bibitem{tardis} Tardis.dev. \href{https://docs.tardis.dev/api/http-api-reference}{Historical raw data feeds, HTTP API reference}.
+\end{thebibliography}
+\end{document}
