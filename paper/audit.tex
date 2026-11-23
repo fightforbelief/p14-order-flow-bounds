@@ -1,0 +1,24 @@
+\section{How many boundaries must a verifier inspect?}
+An exchange, or a researcher with access to some matching-engine identifiers, can answer a narrower question than reconstructing every order. Does a proposed ordering of the two states survive plausible errors in \emph{both} directions? A rule can erroneously join executions of different takers, and it can split an episode when a taker trades across timestamps. The previous bounds only admit partitions satisfying the chosen reconstruction rule. Here we keep the sign and segment restrictions and allow any same-side boundary to be wrong. The target unit is a consecutive, same-sign execution episode.
+
+Let $W$ be the higher-persistence group under a proposed reconstruction and $L$ the other group. Write $d_j=n_j-J_j$ for the number of transitions at this proposed partition and $s_j$ for switches in state $j$. Assume $s_j>0$ and a strict initial ranking. Write $u_L=M_L-n_L$ for the number of joined boundaries in $L$. The verifier can check two kinds of boundary. In $W$, a cut between like signs could conceal a true join. In $L$, a proposed join could conceal a true cut. There are $v_W=d_W-s_W$ and $u_L$ such boundaries, respectively. Errors in the other two classes move the difference in the opposite direction.
+
+\paragraph{Proposition 2 (boundary errors and the audit population).}
+Set $C=s_L d_W-s_W d_L>0$. The fewest boundary errors that can eliminate the reported ranking is the solution of
+\[
+ b^* = \min_{i,j\in\mathbb{Z}_{\geq 0}} i+j
+ \quad\text{subject to}\quad
+ s_L i + s_W j \geq C,\quad i\leq v_W,\quad j\leq u_L .
+\]
+Use as many of the higher-weight boundary type as needed, up to its capacity, then fill the remaining deficit from the other type. With $N=v_W+u_L$, a simple random sample of $k$ boundaries from these two classes certifies the ranking upon observing zero errors at risk at most
+\begin{equation}
+     q(k)=\binom{N-b^*}{k}\big/\binom{N}{k}.\label{eq:audit}
+\end{equation}
+This worst-case risk is attained. The smallest $k$ for which $q(k)\leq\alpha$ is minimal for this uniform, fixed-size, zero-error procedure.
+
+\paragraph{Proof.}
+Let $i$ be hidden joins in $W$ and $j$ hidden cuts in $L$. With the other boundaries correct, erasing the ranking is equivalent to $s_W/(d_W-i)\geq s_L/(d_L+j)$. The positive switch counts justify cross multiplication and give the displayed linear constraint. Additional favourable errors cannot help eliminate the ranking. Any subset of candidate edges can be flipped independently because cuts at sign changes and segment boundaries remain compulsory. Each edit has unit cost, so exchanging a lower-weight edit for an available higher-weight edit never reduces progress toward $C$. This proves optimality and constructs an attainable configuration with exactly $b^*$ harmful errors. For any tied or reversed truth there are at least that many harmful errors in the pool. Sampling without replacement misses all of them with probability at most (\ref{eq:audit}), with equality for the constructed configuration. \hfill$\square$
+
+The probability in (\ref{eq:audit}) is over uniform sampling of boundaries on a fixed tape. Serial dependence among trades is unrestricted. If a discrepancy is found, the fixed-sample procedure issues no certificate. Sampling uniformly among \emph{all} same-side boundaries and checking for harmful errors gives the same expression with the larger population in the two states. This supplies a transparent cost benchmark. We make no efficiency claim against optimized unequal-probability or sequential audits. The general idea of bounding audit risk by the minimum number of outcome-changing errors also appears in comparison audits [9]. The two boundary types, their switch-count weights and their attainable capacities here follow from the order-level estimand.
+
+For example, let $(d_W,s_W)=(12,3)$ and $(d_L,s_L)=(8,3)$, with four joined boundaries in $L$. The proposed same-side frequencies are $3/4$ and $5/8$. Four errors can erase the ranking, including four hidden cuts in $L$. There are 13 candidate boundaries. Checking six without finding an error has worst-case probability $\binom{9}{6}/\binom{13}{6}=0.0490$ under a tied or reversed ranking, whereas five checks give $0.0979$. The test needs only labels for the two atoms adjacent to each sampled boundary, under the stated continuity convention.

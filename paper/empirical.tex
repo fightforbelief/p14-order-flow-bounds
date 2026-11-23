@@ -1,4 +1,4 @@
-\section{Which activity rankings survive?}
+\section{Initial Binance activity comparisons}
 The twelve archives contain 27,640,107 elementary fills in 8,026,298 aggregate records. All 288 hours have observations, and the ID checks find no gaps. The three point reconstructions agree on the direction in every symbol-day. High activity yields more successive same-side events when one counts fills, counts aggregate records, or maximally joins records in both states. Yet the sharp native-time contrasts in Table~\ref{tab:primary} straddle zero in seven comparisons. ETH supplies four of these. All four ETH record contrasts are positive and below 2.6 percentage points, while even the narrowest ETH interval exceeds 18 points in width.
 
 \begin{table}[htbp]\centering
@@ -34,7 +34,7 @@ As a secondary check, weight buy-conditioned and sell-conditioned continuation e
 \]
 The numerator and terminal signs are invariant to joining. Both denominators are positive in the sampled groups. By side-specific attainability, the lower and upper endpoints follow by taking the two side minima and the two maxima. Five of twelve native-time comparisons still have positive lower endpoints, but the membership changes. The April SOL lower endpoint rises from $-0.026$ to $+0.031$ percentage points. The April LTC lower endpoint falls from $+0.241$ to $-2.074$ points. Thus the predecessor-side mix affects which activity rankings are identified even when the total number of surviving comparisons stays fixed.
 
-\section{Checking the reconstruction with visible taker labels}
+\section{Short-window check of the sweep assumptions}
 Coinbase Exchange match messages identify the taker order [7]. We replay archived match messages [8] for BTC-USD, ETH-USD and SOL-USD over the first ten minutes of UTC trading on the first day of January, April, July and October 2025. This fixed archive sample replaced an unavailable live WebSocket connection. After inspecting these 12 product-windows we repeated the audit on the first day of the following month in each quarter, at 12:00 UTC. The two panels contain 56,657 fills overall.
 
 To reproduce the observation structure, we first combine adjacent fills with identical taker ID, execution price, side and timestamp. Labels are needed for this within-level aggregation, just as the Binance feed producer uses order information. We then hide the labels and reconstruct across the resulting records. Thus this exercise tests the unknown \emph{between-record} boundaries. Ground truth for this contiguous-partition model is a consecutive episode of the same taker ID. The 24 streams have no trade-ID gaps. In three windows an ID reappears in a later episode, illustrating the distinction between contiguous execution episodes and distinct order IDs. The totals contain 33,060 episodes and 33,057 within-window distinct IDs.

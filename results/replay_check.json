@@ -1,0 +1,146 @@
+[
+  {
+    "day": "2025-03-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": -0.005238740609731285,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-03-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": -0.043304320778126626,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-03-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": 0.026307594926697098,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-06-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": -0.0033682029388595325,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-06-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": -0.003884895511749309,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-06-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": 0.005100777582252136,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-09-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": 7.443856569699925e-06,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-09-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": -0.020666751986572418,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-09-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": 0.01377171152531853,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-12-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": 0.07612811009803544,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-12-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": -0.07644597459330593,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2025-12-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": 0.07343598269514573,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-03-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": -0.023407219173133154,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-03-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": -0.02593093439170735,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-03-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": 0.015017246696763298,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-06-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": -0.06091233291019693,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-06-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": -0.04956395810512415,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-06-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": -0.027946284861910087,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-09-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": -0.03175525696377868,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-09-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": 0.02611720583724919,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-09-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": -0.006788899820492467,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-12-01",
+    "symbol": "ETH-USD",
+    "direct_high_minus_low": -0.02416447037854008,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-12-01",
+    "symbol": "BTC-USD",
+    "direct_high_minus_low": -0.0629578635427146,
+    "cross_hour_missing_ids": 0
+  },
+  {
+    "day": "2024-12-01",
+    "symbol": "SOL-USD",
+    "direct_high_minus_low": -0.01262902742315719,
+    "cross_hour_missing_ids": 0
+  }
+]

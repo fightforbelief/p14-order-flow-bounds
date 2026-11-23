@@ -1,0 +1,63 @@
+{
+  "code": "4b6cc5027a230b339efab419f0e1a1666de5f6bad66a35aea0644ab0f6b5a32a",
+  "day": "2025-03-01",
+  "hour": 1,
+  "slice_sha256": {
+    "60": "7f0875e76e338959e40c61fd5f8743fd395135683c00a8148ffe67c38df7b57d",
+    "70": "04280cf4c360669eb7454eebc1d006285fe99ebe517e87ed531af47f0a4fe01d",
+    "80": "db89ad74cf66583aef22a088858893a26cf80571df4e4cce2fb3075336413d35",
+    "90": "6cbd567e7ac23c2b60ed29846787cf93ce557d5bcb0e902a346ba9051f70561a",
+    "100": "31002d5e7417c6e1170bc32f1454b7033d804b51fa601c75788ffbb40c7e78a4",
+    "110": "60aa3ae0f2172f6a54a2d15a754ebcf88c5a3c3846b4cbdaeb570ae487a29d3e"
+  },
+  "products": {
+    "ETH-USD": {
+      "fills": 11132,
+      "duplicates": 0,
+      "first_id": 616786263,
+      "last_id": 616797394,
+      "records": 9036,
+      "segments": 1,
+      "switches": 1928,
+      "orders": 6640,
+      "native_eligible": 2397,
+      "native_false_join": 1,
+      "native_missed_join": 0,
+      "millisecond_eligible": 2460,
+      "millisecond_false_join": 64,
+      "millisecond_missed_join": 0
+    },
+    "BTC-USD": {
+      "fills": 17775,
+      "duplicates": 0,
+      "first_id": 788769095,
+      "last_id": 788786869,
+      "records": 14686,
+      "segments": 1,
+      "switches": 2708,
+      "orders": 10547,
+      "native_eligible": 4141,
+      "native_false_join": 2,
+      "native_missed_join": 0,
+      "millisecond_eligible": 4174,
+      "millisecond_false_join": 35,
+      "millisecond_missed_join": 0
+    },
+    "SOL-USD": {
+      "fills": 13841,
+      "duplicates": 0,
+      "first_id": 200433845,
+      "last_id": 200447685,
+      "records": 10545,
+      "segments": 1,
+      "switches": 2660,
+      "orders": 8529,
+      "native_eligible": 2017,
+      "native_false_join": 1,
+      "native_missed_join": 0,
+      "millisecond_eligible": 2079,
+      "millisecond_false_join": 63,
+      "millisecond_missed_join": 0
+    }
+  }
+}
